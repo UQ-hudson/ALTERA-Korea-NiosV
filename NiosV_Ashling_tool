@@ -1,0 +1,27 @@
+Test Environment
+  - Windows 10
+  - Quartus Prime Pro Edition 24.2
+  - Ashling RiscFree IDE for IntelFPGA
+  - Agilex5 Premium Dev Kit 
+  - Quartus project 위치
+
+NiosV의 Application / Board Support Package는 Eclipse 기반의 Ashling RiscFree Tool을 사용함
+
+Application Project Build process
+1. BSP폴더 생성 : BSP Editor를 이용하여 BSP build 진행
+2. APP폴더 생성 후 c source 작성 및 CMakeLists 파일 generation 진행
+    > niosv-app --bsp-dir=software\bsp --app-dir=software\app --srcs=software\app\hello.c --elf-name=hello.elf
+3. RiscFree IDE를 이용하여 APP, BSP import
+4. Build the Application.
+    
+Board test process
+1. NiosV command shell실행
+2. Agilex5 Premium dev Kit sof 파일 program (Quartus programmer으로도 가능함)
+    > quartus_pgm -c 1 -m jtag -o p;top.sof
+3. NiosV Application elf download
+    > niosv-download -g -o app.elf -c 1    # 다운로드 안되면 board reset 한번 실행
+4. jtaguart terminal를 이용한 메시지 출력
+  > juart-terminal -c 1 -d 1 -i 0
+
+import 이후
+settings, Makefile app, bsp 2개, CMakeCache.txt app, bsp 2개 bsp 경로 수정해야 함
